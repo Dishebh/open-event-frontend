@@ -1,11 +1,13 @@
+import classic from 'ember-classic-decorator';
 import Component from '@ember/component';
 import FormMixin from 'open-event-frontend/mixins/form';
 import { validPhoneNumber } from 'open-event-frontend/utils/validators';
 import { pick, orderBy } from 'lodash-es';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { countries } from 'open-event-frontend/utils/dictionary/demography';
 
-export default class extends Component.extend(FormMixin) {
+@classic
+export default class UserPaymentInfoForm extends Component.extend(FormMixin) {
   didInsertElement() {
     super.didInsertElement(...arguments);
     this.set('userBillingInfo', pick(this.authManager.currentUser, ['billingContactName', 'billingCity', 'billingPhone', 'company', 'billingTaxInfo', 'billingCountry', 'billingState', 'billingAddress', 'billingZipCode', 'billingAdditionalInfo']));
@@ -90,7 +92,6 @@ export default class extends Component.extend(FormMixin) {
     };
   }
 
-  @computed()
   get countries() {
     return orderBy(countries, 'name');
   }
